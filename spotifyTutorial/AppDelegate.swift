@@ -88,12 +88,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         print("audioStreamingDidLogin")
-//        player.playSpotifyURI("spotify:track:58s6EuEYJdlb0kO7awm3Vp", startingWith: 0, startingWithPosition: 0, callback: {
-//        (error) in
-//            if let streamingError = error {
-//                print("error in playSpotifyURI \(String(describing: streamingError.localizedDescription))")
-//            }
-//        })
+        player.playSpotifyURI("spotify:track:58s6EuEYJdlb0kO7awm3Vp", startingWith: 0, startingWithPosition: 0, callback: {
+        (error) in
+            if let streamingError = error {
+                print("error in playSpotifyURI \(String(describing: streamingError.localizedDescription))")
+            }
+        })
     }
     
 

@@ -35,7 +35,7 @@ class HomeViewController: UIViewController {
 //        }
     }
     @IBAction func pauseButtonPressed(_ sender: UIButton) {
-        slider.maximumValue = Float((player.metadata.currentTrack?.duration)!)
+//        slider.maximumValue = Float((player.metadata.currentTrack?.duration)!)
         if player.playbackState.isPlaying == true {
             player.setIsPlaying(false, callback: nil)
 //            paused = true
@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
         }
         super.viewDidLoad()
         
-        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
         print ("Hello there")
     }
     
