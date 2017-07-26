@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
         }
         super.viewDidLoad()
         
-        _ = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
         print ("Hello there")
     }
     
