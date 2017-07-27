@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-Z6-gi7">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gx5-Z6-gi7">
                                 <rect key="frame" x="45" y="28" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Play"/>
@@ -30,24 +30,24 @@
                                     <action selector="playButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wWV-RO-3gX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPc-yi-S7T">
-                                <rect key="frame" x="169" y="28" width="42" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPc-yi-S7T">
+                                <rect key="frame" x="166.5" y="28" width="42" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="CyN-rZ-PMx"/>
+                                </constraints>
                                 <state key="normal" title="Pause"/>
                                 <connections>
                                     <action selector="pauseButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JaE-HI-a54"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pF8-fg-SiU">
-                                <rect key="frame" x="40" y="87" width="294" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pF8-fg-SiU">
+                                <rect key="frame" x="30" y="87" width="315" height="31"/>
                                 <connections>
                                     <action selector="changeAudioTime:" destination="BYZ-38-t0r" eventType="valueChanged" id="xjJ-eY-UWc"/>
                                 </connections>
                             </slider>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0o4-zo-XTX">
-                                <rect key="frame" x="0.0" y="190" width="375" height="477"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="46" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0o4-zo-XTX">
+                                <rect key="frame" x="0.0" y="137" width="375" height="530"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playlistCell" rowHeight="46" id="Nq9-2a-Ufl" customClass="PlaylistCell" customModule="spotifyTutorial" customModuleProvider="target">
@@ -95,8 +95,20 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="pF8-fg-SiU" secondAttribute="trailing" constant="16" id="0Nd-Nl-NEK"/>
+                            <constraint firstItem="0o4-zo-XTX" firstAttribute="top" secondItem="pF8-fg-SiU" secondAttribute="bottom" constant="20" id="8xU-j0-d7N"/>
+                            <constraint firstItem="dPc-yi-S7T" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="GJB-MU-L0s"/>
+                            <constraint firstAttribute="trailing" secondItem="0o4-zo-XTX" secondAttribute="trailing" id="RJe-5Z-Edo"/>
+                            <constraint firstItem="0o4-zo-XTX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WmV-56-2Zg"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0o4-zo-XTX" secondAttribute="bottom" id="XUh-rW-QFu"/>
+                            <constraint firstItem="dPc-yi-S7T" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fC7-32-JlA"/>
+                            <constraint firstItem="pF8-fg-SiU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="fFO-lx-kUl"/>
+                            <constraint firstItem="pF8-fg-SiU" firstAttribute="top" secondItem="dPc-yi-S7T" secondAttribute="bottom" constant="29" id="vzA-fm-pN6"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="pauseButton" destination="dPc-yi-S7T" id="DhH-uU-K8c"/>
                         <outlet property="slider" destination="pF8-fg-SiU" id="w48-rE-cIZ"/>
                         <outlet property="tableView" destination="0o4-zo-XTX" id="LXB-FK-udo"/>
                     </connections>

@@ -23,6 +23,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
     var currentLibrary = [NSDictionary]()
     
     @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var pauseButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -46,11 +47,15 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
 //        slider.maximumValue = Float((player.metadata.currentTrack?.duration)!)
         if player.playbackState.isPlaying == true {
             player.setIsPlaying(false, callback: nil)
+            pauseButton.setTitle("Play", for: .normal)
+
+            
 //            paused = true
 //            print(player.playbackState.position)
 
         } else {
             player.setIsPlaying(true, callback: nil)
+            pauseButton.setTitle("Pause", for: .normal)
 //            paused = false
         }
     }
