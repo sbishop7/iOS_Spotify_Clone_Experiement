@@ -103,9 +103,9 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
                 }
                 
                 DispatchQueue.main.async {
-                    print ("******* currentLibrary *******")
-//                    print("currentLibrary.count is.... \(self.currentLibrary.count)")
-                    print (self.currentLibrary[0])
+//                    print ("******* currentLibrary *******")
+////                    print("currentLibrary.count is.... \(self.currentLibrary.count)")
+//                    print (self.currentLibrary[0])
                     self.tableView.reloadData()
                 }
                 
@@ -117,10 +117,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
             print("didn't work")
         }
 
-        print ("******* currentLibrary *******")
-        print("currentLibrary.count is.... \(currentLibrary.count)")
-        print (currentLibrary)
-//
+//        print ("******* currentLibrary *******")
+//        print("currentLibrary.count is.... \(currentLibrary.count)")
+//        print (currentLibrary)
+////
     }
     
     func updateSlider() {
@@ -152,6 +152,23 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
         }
     }
     
+    func getImage(_ url_str:String, _ imageView:UIImageView) {
+        print("inside getImage function")
+        let url:URL = URL(string: url_str)!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url, completionHandler: {
+            ( data, response, error) in
+            if data != nil {
+                let image = UIImage(data: data!)
+                if(image != nil) {
+                    
+                }
+            }
+        })
+        task.resume()
+    }
+    
+    
 }
 
 extension HomeViewController: UITableViewDataSource {
@@ -165,7 +182,32 @@ extension HomeViewController: UITableViewDataSource {
         if currentLibrary.count > 0 {
             cell.playlistNameLabel?.text = currentLibrary[indexPath.row]["name"] as? String
         //        cell.textLabel?.text = "Hello World"
+            let images = currentLibrary[indexPath.row]["images"] as? NSArray
+//            print(images!)
+            let thumbnail = images?[2] as? NSDictionary
+            let thumbnailURL = thumbnail?["url"]
+            print(thumbnailURL!)
+        
+        
+//        func getImage(_ url_str: String, _ imageView:UIImageView) {
+//            print("inside new function")
+            let url:URL = URL(string: thumbnailURL as! String)!
+            let session = URLSession.shared
+            let task = session.dataTask(with: url, completionHandler: {
+                ( data, response, error) in
+                if data != nil {
+                    print("found image data")
+                    let image = UIImage(data: data!)
+                    if(image != nil) {
+                        DispatchQueue.main.async {
+                            cell.albumArt?.image = image
+                        }
+                    }
+                }
+            })
+            task.resume()
         }
+
         
         return cell
     }
