@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		547E28A61F2A8C57002273AD /* playlistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547E28A51F2A8C57002273AD /* playlistCell.swift */; };
 		C0178CB61F266F9C00BD1448 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0178CB51F266F9C00BD1448 /* AppDelegate.swift */; };
 		C0178CB81F266F9C00BD1448 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0178CB71F266F9C00BD1448 /* HomeViewController.swift */; };
 		C0178CBB1F266F9C00BD1448 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0178CB91F266F9C00BD1448 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		547E28A51F2A8C57002273AD /* playlistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = playlistCell.swift; sourceTree = "<group>"; };
 		C0178CB21F266F9C00BD1448 /* spotifyTutorial.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spotifyTutorial.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0178CB51F266F9C00BD1448 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0178CB71F266F9C00BD1448 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				C06C8E801F26C435006D886A /* models */,
 				C06C8E7F1F26C430006D886A /* controllers */,
 				C0178CB91F266F9C00BD1448 /* Main.storyboard */,
+				547E28A51F2A8C57002273AD /* playlistCell.swift */,
 				C0178CBF1F266F9C00BD1448 /* Assets.xcassets */,
 				C0178CC11F266F9C00BD1448 /* LaunchScreen.storyboard */,
 				C0178CC41F266F9C00BD1448 /* Info.plist */,
@@ -206,6 +209,7 @@
 				C0178CB81F266F9C00BD1448 /* HomeViewController.swift in Sources */,
 				C0178CB61F266F9C00BD1448 /* AppDelegate.swift in Sources */,
 				C06C8E851F26C5C7006D886A /* Playlist.swift in Sources */,
+				547E28A61F2A8C57002273AD /* playlistCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

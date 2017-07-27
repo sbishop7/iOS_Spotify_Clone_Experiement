@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
             self.startAuthenticationFlow()
         }
         
+        
+        
         return true
     }
     
@@ -70,6 +72,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SPTAudioStreamingDelegate
                 
                 if session != nil {
                     self.player.login(withAccessToken: self.auth.session.accessToken)
+                    do {
+                        
+                        let request = try SPTBrowse.createRequestForNewReleases(inCountry: nil, limit: 10, offset: 0, accessToken: self.auth.session.accessToken)
+                        let session = URLSession.shared
+                        let dataTask = session.dataTask(with: request) {
+                            data, response, error in
+                                print("data is... \(data!)")
+                        }
+                        dataTask.resume()
+                        
+                    } catch {
+                        print("didn't work")
+                    }
+                    
                 }
                 
                 // archived flow for saving session to UserDefaults
