@@ -21,13 +21,21 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
     var paused = false
     var track = "spotify:album:297AQHapCeBHluODsEnKXg"
     var currentLibrary = [NSDictionary]()
+    var currentAlbum = ""
+    var currentArtist = ""
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var pauseButton: UIButton!
+    @IBOutlet weak var getNewMusicLabel: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentAlbumArt: UIImageView!
     
+    @IBAction func getNewMusicButtonPressed(_ sender: UIButton) {
+        getNewMusic()
+        getNewMusicLabel.isHidden = true
+        tableView.isHidden = false
+    }
     
     @IBAction func playButtonPressed(_ sender: UIButton) {
         print("play button pressed")
@@ -96,51 +104,106 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
         }
         super.viewDidLoad()
         pauseButton.isHidden = true
-        // slider.isHidden = true
+        if self.currentLibrary.count == 0 {
+            tableView.isHidden = true
+        }
+        // slider.isHidden = true#1	0x00000001079915de in HomeViewController.viewDidLoad() -> () at /Users/sbishop7/Code/spotify-master/spotifyTutorial/HomeViewController.swift:106
+
         
-        _ = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
         print ("Hello there")
         
-        do {
-            
-            let request = try SPTBrowse.createRequestForNewReleases(inCountry: nil, limit: 10, offset: 0, accessToken: appDelegate.auth.session.accessToken)
-            let session = URLSession.shared
-            let dataTask = session.dataTask(with: request) {
-                data, response, error in
-//                print("data is... \(data!)")
-                let jsonData = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
-                
-                let albums = jsonData["albums"] as! NSDictionary
-                let albumData = albums["items"] as! NSArray
-                print("albumData count is ... \(albumData.count)")
-                
-                for album in albumData {
-                    let albumInfo = album as! NSDictionary
-//                    print(albumInfo)
-                    self.currentLibrary.append(albumInfo)
-//                    print (self.currentLibrary)
-                }
-                
-                DispatchQueue.main.async {
-//                    print ("******* currentLibrary *******")
-////                    print("currentLibrary.count is.... \(self.currentLibrary.count)")
-//                    print (self.currentLibrary[0])
-                    self.tableView.reloadData()
-                }
-                
-                
-            }
-            dataTask.resume()
-            
-        } catch {
-            print("didn't work")
-        }
+//        do {
+//            
+//            if appDelegate.auth.session != nil {
+//                print("AccessToken is... \(appDelegate.auth.session.accessToken)")
+//            
+//                let request = try SPTBrowse.createRequestForNewReleases(inCountry: nil, limit: 10, offset: 0, accessToken: appDelegate.auth.session.accessToken)
+//                let session = URLSession.shared
+//                let dataTask = session.dataTask(with: request) {
+//                    data, response, error in
+////                  print("data is... \(data!)")
+//                    let jsonData = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+//                
+//                    if jsonData["albums"] != nil {
+//                        let albums = jsonData["albums"] as! NSDictionary
+//                        let albumData = albums["items"] as! NSArray
+//                        print("albumData count is ... \(albumData.count)")
+//                
+//                        for album in albumData {
+//                            let albumInfo = album as! NSDictionary
+////                          print(albumInfo)
+//                            self.currentLibrary.append(albumInfo)
+////                          print (self.currentLibrary)
+//                        }
+//                    }
+//                
+//                    DispatchQueue.main.async {
+////                      print ("******* currentLibrary *******")
+//////                    print("currentLibrary.count is.... \(self.currentLibrary.count)")
+////                      print (self.currentLibrary[0])
+//                        self.tableView.reloadData()
+//                    }
+//                
+//                
+//                }
+//                dataTask.resume()
+//            }
+//            
+//        } catch {
+//            print("didn't work")
+//        }
 
 //        print ("******* currentLibrary *******")
 //        print("currentLibrary.count is.... \(currentLibrary.count)")
 //        print (currentLibrary)
 ////
     }
+    
+    func getNewMusic() {
+        
+        do {
+            
+            if appDelegate.auth.session != nil {
+                print("AccessToken is... \(appDelegate.auth.session.accessToken)")
+                
+                let request = try SPTBrowse.createRequestForNewReleases(inCountry: nil, limit: 10, offset: 0, accessToken: appDelegate.auth.session.accessToken)
+                let session = URLSession.shared
+                let dataTask = session.dataTask(with: request) {
+                    data, response, error in
+                    //                  print("data is... \(data!)")
+                    let jsonData = try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                    
+                    if jsonData["albums"] != nil {
+                        let albums = jsonData["albums"] as! NSDictionary
+                        let albumData = albums["items"] as! NSArray
+                        print("albumData count is ... \(albumData.count)")
+                        
+                        for album in albumData {
+                            let albumInfo = album as! NSDictionary
+                            //                          print(albumInfo)
+                            self.currentLibrary.append(albumInfo)
+                            //                          print (self.currentLibrary)
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        //                      print ("******* currentLibrary *******")
+                        ////                    print("currentLibrary.count is.... \(self.currentLibrary.count)")
+                        //                      print (self.currentLibrary[0])
+                        self.tableView.reloadData()
+                    }
+                    
+                    
+                }
+                dataTask.resume()
+            }
+            
+        } catch {
+            print("didn't work")
+        }
+    }
+
     
     func updateSlider() {
 //        if player.playbackState.isPlaying == true {
@@ -253,13 +316,20 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let uri = currentLibrary[indexPath.row]["uri"]
+        currentAlbum = (currentLibrary[indexPath.row]["name"] as? String)!
+        let artists = currentLibrary[indexPath.row]["artists"] as? NSArray
+        let artist = artists?[0] as? NSDictionary
+        currentArtist = (artist?["name"] as? String)!
+        
         track = uri as! String
+//        print("track is... \(track)")
         player.playSpotifyURI(track, startingWith: 0, startingWithPosition: 0, callback: {
             (error) in
             if let streamingError = error {
                 print("error in playSpotifyURI \(String(describing: streamingError.localizedDescription))")
             }
         })
+        
         pauseButton.setTitle("Pause", for: .normal)
         pauseButton.isHidden = false
         
