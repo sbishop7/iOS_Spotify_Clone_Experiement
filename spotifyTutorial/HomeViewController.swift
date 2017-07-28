@@ -26,6 +26,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
     @IBOutlet weak var pauseButton: UIButton!
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var currentAlbumArt: UIImageView!
     
     
     @IBAction func playButtonPressed(_ sender: UIButton) {
@@ -261,6 +262,28 @@ extension HomeViewController: UITableViewDelegate {
         })
         pauseButton.setTitle("Pause", for: .normal)
         pauseButton.isHidden = false
+        
+        let images = currentLibrary[indexPath.row]["images"] as? NSArray
+        //            print(images!)
+        let thumbnail = images?[0] as? NSDictionary
+        let thumbnailURL = thumbnail?["url"]
+        print(thumbnailURL!)
+        
+        let url:URL = URL(string: thumbnailURL as! String)!
+        let session = URLSession.shared
+        let task = session.dataTask(with: url, completionHandler: {
+            ( data, response, error) in
+            if data != nil {
+                print("found image data")
+                let image = UIImage(data: data!)
+                if(image != nil) {
+                    DispatchQueue.main.async {
+                        self.currentAlbumArt.image = image
+                    }
+                }
+            }
+        })
+        task.resume()
     }
 
 }
