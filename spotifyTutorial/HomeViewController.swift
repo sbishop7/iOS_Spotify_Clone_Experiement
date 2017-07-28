@@ -24,10 +24,16 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
     var currentAlbum = ""
     var currentArtist = ""
     
+    @IBOutlet weak var headerTrackLabel: UILabel!
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var getNewMusicLabel: UIButton!
     
+    @IBOutlet weak var headerAlbumLabel: UILabel!
+    @IBOutlet weak var headerArtistLabel: UILabel!
+    @IBOutlet weak var trackLabel: UILabel!
+    @IBOutlet weak var albumLabel: UILabel!
+    @IBOutlet weak var artistLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var currentAlbumArt: UIImageView!
     
@@ -98,6 +104,13 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
     
     override func viewDidLoad() {
         tableView.dataSource = self
+        artistLabel.isHidden = true
+        albumLabel.isHidden = true
+        trackLabel.isHidden = true
+        headerTrackLabel.isHidden = true
+        headerArtistLabel.isHidden = true
+        headerAlbumLabel.isHidden = true
+        
         Playlist.getListOfFeaturedPlaylists(params: [:]){
         data, response, error in
 //            print ("error is ...\(String(describing: error))")
@@ -213,6 +226,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
 //            print(player.metadata.currentTrack!)
                     slider.maximumValue = Float((player.metadata.currentTrack?.duration)!)
                     slider.value = Float(player.playbackState.position)
+                    trackLabel.text = player.metadata.currentTrack?.name
                 }
             }
 //        slider.value = Float(player.playbackState.position)sdfasdfas
@@ -320,6 +334,14 @@ extension HomeViewController: UITableViewDelegate {
         let artists = currentLibrary[indexPath.row]["artists"] as? NSArray
         let artist = artists?[0] as? NSDictionary
         currentArtist = (artist?["name"] as? String)!
+        artistLabel.text = currentArtist
+        artistLabel.isHidden = false
+        albumLabel.text = currentAlbum
+        albumLabel.isHidden = false
+        trackLabel.isHidden = false
+        headerAlbumLabel.isHidden = false
+        headerArtistLabel.isHidden = false
+        headerTrackLabel.isHidden = false
         
         track = uri as! String
 //        print("track is... \(track)")
