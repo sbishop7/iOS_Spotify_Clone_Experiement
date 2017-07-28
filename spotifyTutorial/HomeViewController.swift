@@ -12,7 +12,7 @@ import Foundation
 
 
 
-class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
+class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, SPTCoreAudioControllerDelegate {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     let clientID = "ae9d84e70f4b4ba487165a760dbb8b31"
@@ -62,14 +62,25 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
 
     @IBAction func changeAudioTime(_ sender: UISlider) {
         if player.playbackState.isPlaying == true {
+            print("changing")
             player.setIsPlaying(false, callback: nil)
-            //            paused = true
-//            print(player.playbackState.position)
+//            //            paused = true
+////            print(player.playbackState.position)
+//            let songLength = player.metadata.currentTrack?.duration
+            let currentTime = TimeInterval(slider.value)
+//            slider.value = Float(currentTime * songLength!)
+            player.seek(to: currentTime, callback: nil)
+            DispatchQueue.main.async {
+                self.player.setIsPlaying(true, callback: nil)
+                print("restarting")
+            }
             
+//
         }
-        let currentTime = TimeInterval(slider.value)
-        slider.value = Float(currentTime)
-        player.seek(to: currentTime, callback: nil)
+//        let songLength = player.metadata.currentTrack?.duration
+//        let currentTime = TimeInterval(slider.value * songLength)
+//        slider.value = Float(currentTime)
+//        player.seek(to: currentTime, callback: nil)
 //        print(player.playbackState.position)
         
         
@@ -83,8 +94,10 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
 //            print ("error is ...\(String(describing: error))")
         }
         super.viewDidLoad()
+        pauseButton.isHidden = true
+        // slider.isHidden = true
         
-//        _ = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 0.9, target: self, selector: #selector(HomeViewController.updateSlider), userInfo: nil, repeats: true)
         print ("Hello there")
         
         do {
@@ -129,33 +142,40 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
     }
     
     func updateSlider() {
-        if (player.playbackState?.isPlaying)! {
+//        if player.playbackState.isPlaying == true {
             if (player.metadata?.currentTrack != nil) {
+                if player.playbackState.isPlaying == true {
 //            print("there is metadata")
 //            print(player.metadata.currentTrack!)
-                slider.maximumValue = Float((player.metadata.currentTrack?.duration)!)
-                slider.value = Float(player.playbackState.position)
+                    slider.maximumValue = Float((player.metadata.currentTrack?.duration)!)
+                    slider.value = Float(player.playbackState.position)
+                }
             }
 //        slider.value = Float(player.playbackState.position)sdfasdfas
-        }
+//        }
     }
     
     private func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didStartPlayingTrack position: TimeInterval) {
         if let track = self.player.metadata.currentTrack{
             slider.value = Float(position/track.duration)
         }
+        print("started playback")
     }
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didSeekToPosition position: TimeInterval) {
         if let track = self.player.metadata.currentTrack{
             slider.value = Float(position/track.duration)
             player.setIsPlaying(true, callback: nil)
         }
+        print("didSeekToPosition")
     }
-    func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChangePosition position: TimeInterval) {
-        if let track = self.player.metadata.currentTrack{
-            slider.value = Float(position/track.duration)
-        }
-    }
+//    func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didChangePosition position: TimeInterval) {
+//        if let track = self.player.metadata.currentTrack{
+//            slider.value = Float(position/track.duration)
+//        }
+//        print("didChangePosition")
+//    }
+    
+
     
     func getImage(_ url_str:String, _ imageView:UIImageView) {
         print("inside getImage function")
@@ -172,6 +192,7 @@ class HomeViewController: UIViewController, SPTAudioStreamingDelegate, SPTAudioS
         })
         task.resume()
     }
+    
     
     
 }
@@ -223,7 +244,7 @@ extension HomeViewController: UITableViewDataSource {
 //        
 //    }
     
-    
+
 }
 
 
@@ -238,6 +259,8 @@ extension HomeViewController: UITableViewDelegate {
                 print("error in playSpotifyURI \(String(describing: streamingError.localizedDescription))")
             }
         })
+        pauseButton.setTitle("Pause", for: .normal)
+        pauseButton.isHidden = false
     }
 
 }
